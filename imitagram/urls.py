@@ -16,13 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework.authtoken import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('users/', include('users.urls')),
     path('media/', include('media.urls')),
+    path('relationships/', include('relationships.urls')),
     path('register', include('rest_auth.registration.urls')),
     path('admin/', admin.site.urls),
     path('api-token-auth', views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

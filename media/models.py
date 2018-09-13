@@ -11,3 +11,13 @@ class Media(models.Model):
     likes_count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
+class Comment(models.Model):
+    media = models.ForeignKey(Media, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Like(models.Model):
+    media = models.ForeignKey(Media, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)

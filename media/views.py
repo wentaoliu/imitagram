@@ -11,7 +11,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action, api_view, permission_classes, parser_classes
 from rest_framework.parsers import JSONParser, MultiPartParser
 from django.core.files.storage import FileSystemStorage
-from media.models import Media
+from media.models import Media, Comment, Like
+from media.serializers import CommentSerializer
 
 
 @api_view(['POST'])
@@ -28,3 +29,40 @@ def upload(request):
     m.lng = request.data['lng']
     m.save()
     return Response(status=204)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes((IsAuthenticated,))
+def comments(request, id):
+    if request.method == 'GET':
+        data = Comment.objects.filter(media_id=id)
+        serializer = CommentSerializer(data, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        media = Media.objects.get(pk=id)
+        c = Comment(media=media)
+        c.user = request.user
+        c.text = request.data['text']
+        c.save()
+        # TODO
+        # update cache counter
+        return Response(status=204)
+
+@api_view(['GET', 'POST'])
+@permission_classes((IsAuthenticated,))
+def likes(request, id):
+    if request.method == 'GET':
+        data = Like.objects.select_related('user').filter(media_id=id)
+        likes = [x.user for x in data]
+        serializer = UserSerializer(likes, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        media = Media.objects.get(pk=id)
+        c = Like(media=media)
+        c.user = request.user
+        c.save()
+        # TODO
+        # update cache counter
+        return Response(status=204)

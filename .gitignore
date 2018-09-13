@@ -111,3 +111,6 @@ dmypy.json
 
 # IDEs and Editors
 .vscode
+
+# Uploaded files
+upload/
