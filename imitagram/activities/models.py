@@ -1,12 +1,11 @@
 from django.db import models
-from media.models import Like
-from django.contrib.auth.models import User
-from relationships.models import Relationship
-from django.db.models.signals import pre_save, pre_delete, post_save, post_delete
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from media.models import Media
+from django.contrib.auth.models import User
+from imitagram.relationships.models import Relationship
+from imitagram.media.models import Like
+from imitagram.media.models import Media
 
-# Create your models here.
 class Activity(models.Model):
     actor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='actor')
     target = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='target')

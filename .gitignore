@@ -113,4 +113,5 @@ dmypy.json
 .vscode
 
 # Uploaded files
-upload/
+upload/*
+!upload/avatar.jpg

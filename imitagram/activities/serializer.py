@@ -1,9 +1,7 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
-from activities.models import Activity
-from media.models import Media
-from media.serializers import MediaSerializer
-from users.serializers import UserSerializer
+from imitagram.media.serializers import MediaSerializer
+from imitagram.users.serializers import UserSerializer
+from .models import Activity
 
 class ActivitySerializer(serializers.ModelSerializer):
     actor = UserSerializer()

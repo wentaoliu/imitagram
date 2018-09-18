@@ -1,18 +1,13 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.contrib.auth.models import User
-from users.serializers import UserSerializer
-from django.http import Http404
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action, api_view, permission_classes, parser_classes
+from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.parsers import JSONParser, MultiPartParser
 from django.core.files.storage import FileSystemStorage
-from media.models import Media, Comment, Like
-from media.serializers import CommentSerializer
+from imitagram.users.serializers import UserSerializer
+from .models import Media, Comment, Like
+from .serializers import CommentSerializer
 
 
 @api_view(['POST'])

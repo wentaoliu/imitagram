@@ -31,25 +31,23 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
-    'users.apps.UsersConfig',
-    'media.apps.MediaConfig',
-    'relationships.apps.RelationshipsConfig',
-    'activities.apps.ActivitiesConfig',
+    'imitagram.users',
+    'imitagram.media',
+    'imitagram.relationships',
+    'imitagram.activities',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'django.contrib.sites',
+    'rest_auth.registration', 
     'allauth',
     'allauth.account',
-    'rest_auth.registration',
-
 ]
 
 MIDDLEWARE = [

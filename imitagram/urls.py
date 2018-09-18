@@ -20,11 +20,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('polls/', include('polls.urls')),
-    path('users/', include('users.urls')),
-    path('media/', include('media.urls')),
-    path('relationships/', include('relationships.urls')),
-    path('activities/', include('activities.urls')),
+    path('users/', include('imitagram.users.urls')),
+    path('media/', include('imitagram.media.urls')),
+    path('relationships/', include('imitagram.relationships.urls')),
+    path('activities/', include('imitagram.activities.urls')),
     path('register', include('rest_auth.registration.urls')),
     path('admin/', admin.site.urls),
     path('api-token-auth', views.obtain_auth_token),

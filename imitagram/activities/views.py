@@ -1,17 +1,14 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.contrib.auth.models import User
-from users.serializers import UserSerializer
-from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action, api_view, permission_classes
-from activities.models import Activity
-from activities.serializer import ActivitySerializer
-from relationships.models import Relationship
+from rest_framework.decorators import api_view, permission_classes
+from imitagram.users.serializers import UserSerializer
+from imitagram.relationships.models import Relationship
+from .models import Activity
+from .serializer import ActivitySerializer
+
 
 
 @api_view(['GET'])
