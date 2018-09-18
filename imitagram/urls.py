@@ -24,6 +24,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('media/', include('media.urls')),
     path('relationships/', include('relationships.urls')),
+    path('activities/', include('activities.urls')),
     path('register', include('rest_auth.registration.urls')),
     path('admin/', admin.site.urls),
     path('api-token-auth', views.obtain_auth_token),
