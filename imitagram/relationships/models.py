@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from imitagram.users.models import User
 
 
 class Relationship(models.Model):

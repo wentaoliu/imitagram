@@ -1,19 +1,36 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from imitagram.users.serializers import UserSerializer
-from .models import Media, Comment
+from imitagram.locations.serializers import LocationSerializer
+from .models import Image, Media, Comment
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ('low_resolution', 'thumbnail', 'standard_resolution')
 
 
 class MediaSerializer(serializers.ModelSerializer):
-    uploader = UserSerializer()
+    user = UserSerializer()
+    image = ImageSerializer()
+    location = LocationSerializer(required=False)
+    comments = serializers.SerializerMethodField()
+    likes = serializers.SerializerMethodField()
+
     class Meta:
         model = Media
-        fields = ('id', 'uploader', 'image_url','lat','lng','comments_count','likes_count','created_at')
+        fields = ('id', 'user', 'image', 'comments', 'likes', 'location', 'created_time')
+
+    def get_comments(self, obj):
+        return {'count': obj.comments_count}
+
+    def get_likes(self, obj):
+        return {'count': obj.likes_count}
 
 
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Comment
-        fields = ('id', 'user', 'text', 'created_at')
+        fields = ('id', 'user', 'text', 'created_time')
         

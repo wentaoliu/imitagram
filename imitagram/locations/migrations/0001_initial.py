@@ -12,11 +12,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Activity',
+            name='Location',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('verb', models.CharField(max_length=50)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('latitude', models.FloatField()),
+                ('longitude', models.FloatField()),
+                ('name', models.CharField(max_length=255)),
             ],
         ),
     ]

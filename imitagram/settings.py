@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'imitagram.users',
+    'imitagram.locations',
     'imitagram.media',
     'imitagram.relationships',
     'imitagram.activities',
@@ -144,4 +145,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+
 MEDIA_URL = '/upload/'
+
+AUTH_USER_MODEL = 'users.User'

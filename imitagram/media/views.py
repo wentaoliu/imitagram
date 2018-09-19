@@ -1,12 +1,11 @@
-from django.contrib.auth.models import User
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.parsers import JSONParser, MultiPartParser
-from django.core.files.storage import FileSystemStorage
+# from django.core.files.storage import FileSystemStorage
 from imitagram.users.serializers import UserSerializer
-from .models import Media, Comment, Like
+from imitagram.locations.models import Location
+from .models import Image, Media, Comment, Like
 from .serializers import CommentSerializer
 
 
@@ -14,14 +13,18 @@ from .serializers import CommentSerializer
 @permission_classes((IsAuthenticated,))
 @parser_classes((MultiPartParser, JSONParser, ))
 def upload(request):
-    file_obj = request.data['file']
-    fs = FileSystemStorage()
-    filename = fs.save(file_obj.name, file_obj)
-    upload_file_url = fs.url(filename)
-    m = Media(image_url = upload_file_url)
-    m.uploader = request.user
-    m.lat = request.data['lat']
-    m.lng = request.data['lng']
+    image = Image(standard_resolution=request.data['file'])
+    image.save()
+    m = Media(image=image)
+    m.user = request.user
+    
+    if 'lat' in request.data and 'lng' in request.data:
+        lat = request.data['lat']
+        lng = request.data['lng']
+        location = Location(latitude=lat, longitude=lng) 
+        location.save()
+        m.location = location
+
     m.save()
     return Response(status=204)
 

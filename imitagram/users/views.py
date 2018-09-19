@@ -19,7 +19,7 @@ def self(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def self_media_recent(request):
-    posts = Media.objects.filter(uploader=request.user).order_by('-created_at')[:10]
+    posts = Media.objects.filter(user=request.user).order_by('-created_time')[:10]
     serializer = MediaSerializer(posts, many=True)
     return Response(serializer.data)
 
