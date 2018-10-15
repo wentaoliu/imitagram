@@ -47,7 +47,21 @@ def search(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def self_feed(request):
+    count = 10
+    if 'count' in request.query_params:
+        count = request.query_params['count']
+
     following = [x.sink for x in Relationship.objects.filter(source=request.user)]
-    posts = Media.objects.order_by('-created_at').filter(uploader_id__in=following)[:10]
+
+    if 'max_id' in request.query_params:
+        max_id = request.query_params['max_id']
+        posts = Media.objects.order_by('-created_time').filter(user_id__in=following, pk__lt=max_id)[:count]
+    elif 'min_id' in request.query_params:
+        min_id = request.query_params['min_id']
+        posts = Media.objects.order_by('-created_time').filter(user_id__in=following, pk__gt=min_id)[:count]
+    else:
+        posts = Media.objects.order_by('-created_time').filter(user_id__in=following)[:count]
+    
+    
     serializer = MediaSerializer(posts, many=True)
     return Response(serializer.data)

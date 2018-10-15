@@ -13,7 +13,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 
 def user_profile_picture_path(instance, filename):
-    return 'profiles/user_{0}/{1}'.format(instance.user.id, filename)
+    return 'profiles/user_{0}/{1}'.format(instance.id, filename)
 
 
 class User(AbstractUser):
