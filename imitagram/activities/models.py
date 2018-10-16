@@ -29,7 +29,7 @@ def like_post_save(sender, **kwargs):
     like = kwargs['instance']
     activity = Activity()
     activity.actor = like.user
-    activity.target = like.media.uploader
+    activity.target = like.media.user
     activity.verb = 'like'
     activity.obj = like.media
     activity.save()

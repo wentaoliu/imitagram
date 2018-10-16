@@ -58,9 +58,10 @@ def likes(request, id):
 
     elif request.method == 'POST':
         media = Media.objects.get(pk=id)
-        c = Like(media=media)
-        c.user = request.user
-        c.save()
-        # TODO
-        # update cache counter
+        if Like.objects.filter(media=media, user=request.user).count() == 0:
+            c = Like(media=media)
+            c.user = request.user
+            c.save()
+            # TODO
+            # update cache counter
         return Response(status=204)
