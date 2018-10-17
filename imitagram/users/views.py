@@ -6,13 +6,13 @@ from rest_framework.decorators import api_view, permission_classes
 from imitagram.media.models import Media
 from imitagram.media.serializers import MediaSerializer
 from imitagram.relationships.models import Relationship
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserDetailsSerializer
 
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def self(request):
-    serializer = UserSerializer(request.user)
+    serializer = UserDetailsSerializer(request.user)
     return Response(serializer.data)
 
 
