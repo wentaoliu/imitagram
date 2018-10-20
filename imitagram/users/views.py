@@ -27,11 +27,14 @@ def self_media_recent(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def self_suggest(request):
-    following = Relationship.objects.filter(source=request.user)[:5]
+    followings = Relationship.objects.filter(source=request.user)
     # TODO
     suggests = []
-    for f in following:
-        suggests.append(Relationship.objects.get(source=f.sink).sink)
+    count = 0
+    for f in followings:
+        res = Relationship.objects.filter(source=f.sink)
+        if res.count() > 0:
+            suggests += [r.sink for r in res]
     serializer = UserSerializer(suggests, many=True)
     return Response(serializer.data)
 
