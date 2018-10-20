@@ -34,7 +34,7 @@ def self_suggest(request):
     for f in followings:
         res = Relationship.objects.filter(source=f.sink)
         if res.count() > 0:
-            suggests += [r.sink for r in res]
+            suggests += [r.sink for r in res if r.sink is not request.user]
     serializer = UserSerializer(suggests, many=True)
     return Response(serializer.data)
 
